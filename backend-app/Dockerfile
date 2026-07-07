@@ -63,7 +63,8 @@ COPY --from=frontend /app/public/build ./public/build
 COPY docker/render-entrypoint.sh /usr/local/bin/render-entrypoint
 
 RUN chmod +x /usr/local/bin/render-entrypoint \
-    && composer dump-autoload --optimize --no-dev \
+    && rm -f bootstrap/cache/*.php \
+    && composer dump-autoload --optimize --no-dev --no-scripts \
     && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
