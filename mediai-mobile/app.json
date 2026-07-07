@@ -1,0 +1,73 @@
+{
+  "expo": {
+    "name": "mediai-mobile",
+    "slug": "mediai-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mediai.mobile",
+      "infoPlist": {
+        "NSBluetoothAlwaysUsageDescription": "MediAI utilise le Bluetooth pour se connecter à votre bracelet MediAI Band Pro et lire vos données de santé en temps réel.",
+        "NSBluetoothPeripheralUsageDescription": "MediAI utilise le Bluetooth pour communiquer avec votre bracelet MediAI Band Pro."
+      }
+    },
+    "android": {
+      "package": "com.mediai.mobile",
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2d6a4f"
+      },
+      "permissions": [
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_SCAN",
+        "BLUETOOTH_CONNECT",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 300,
+          "resizeMode": "contain",
+          "backgroundColor": "#2d6a4f"
+        }
+      ],
+      "@react-native-google-signin/google-signin",
+      "expo-notifications",
+      "expo-sharing",
+      [
+        "react-native-ble-plx",
+        {
+          "isBackgroundEnabled": true,
+          "modes": [
+            "central"
+          ],
+          "bluetoothAlwaysPermission": "MediAI utilise le Bluetooth pour se connecter à votre bracelet MediAI Band Pro."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c0e92251-f716-4f08-a073-d9b67aee869c"
+      }
+    },
+    "owner": "sandrin-owen"
+  }
+}

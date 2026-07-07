@@ -1,0 +1,53 @@
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+**/node_modules/
+**/vendor/
+
+# Build outputs and generated folders
+**/dist/
+**/build/
+**/.expo/
+**/.pio/
+**/web-build/
+**/assets/_backup_*/
+**/public/build/
+**/public/storage/
+**/ios/
+**/android/
+
+# Secrets and local credentials
+**/google-services.json
+**/GoogleService-Info.plist
+**/*.jks
+**/*.p8
+**/*.p12
+**/*.key
+**/*.mobileprovision
+**/*.pem
+
+# Local editor and agent files
+.claude/
+.codex/
+.cursor/
+.idea/
+.vscode/
+**/.claude/
+**/.codex/
+**/.cursor/
+**/.idea/
+**/.vscode/
+
+# Git backups from nested repositories
+**/.git.backup/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# Local screenshots
+/Capture d*.png
