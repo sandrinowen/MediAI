@@ -1,8 +1,28 @@
 <?php
 
-// ═══════════════════════════════════════════════════════════════
-//  Configuration CORS — accès API depuis l'app mobile (Expo)
-// ═══════════════════════════════════════════════════════════════
+$csv = static function (string $key, array $fallback = []): array {
+    $value = env($key);
+
+    if ($value === null) {
+        return $fallback;
+    }
+
+    return array_values(array_filter(array_map('trim', explode(',', (string) $value))));
+};
+
+$localOrigins = [
+    'http://localhost:3000',
+    'http://localhost:19000',
+    'http://localhost:19006',
+    'http://localhost:8081',
+    'http://127.0.0.1:8081',
+];
+
+$localOriginPatterns = [
+    '#^http://192\.168\.\d+\.\d+(:\d+)?$#',
+    '#^http://localhost:\d+$#',
+    '#^http://127\.0\.0\.1:\d+$#',
+];
 
 return [
 
@@ -10,19 +30,9 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
-        'http://localhost:3000',
-        'http://localhost:19000',  // Expo (ancien)
-        'http://localhost:19006',  // Expo web (ancien)
-        'http://localhost:8081',   // Expo web / Metro (SDK 50+)
-        'http://127.0.0.1:8081',
-    ],
+    'allowed_origins' => $csv('CORS_ALLOWED_ORIGINS', $localOrigins),
 
-    'allowed_origins_patterns' => [
-        '#^http://192\.168\.\d+\.\d+(:\d+)?$#',          // réseau local (téléphone réel)
-        '#^http://localhost:\d+$#',                       // n\'importe quel port localhost (dev)
-        '#^http://127\.0\.0\.1:\d+$#',
-    ],
+    'allowed_origins_patterns' => $csv('CORS_ALLOWED_ORIGIN_PATTERNS', $localOriginPatterns),
 
     'allowed_headers' => ['*'],
 
