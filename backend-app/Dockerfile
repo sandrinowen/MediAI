@@ -25,7 +25,7 @@ COPY vite.config.js ./
 RUN npm run build
 
 
-FROM php:8.3-apache-bookworm
+FROM php:8.4-apache-bookworm
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
