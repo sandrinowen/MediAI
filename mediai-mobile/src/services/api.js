@@ -11,17 +11,17 @@ import { getToken, logoutUser } from '../utils/storage';
 // URL de base de l'API.
 // Source de vérité : app.config.js → extra.apiBaseUrl, alimenté par la
 // variable d'environnement API_BASE_URL au build EAS (ou .env local).
-// Ainsi l'adresse du backend se change SANS modifier le code (utile quand
-// l'IP du PC change : WiFi / partage de connexion).
+// Ainsi l'adresse du backend se change SANS modifier le code. Le fallback
+// pointe vers le backend Render public pour les builds APK.
 // Fallback en dur au cas où extra ne serait pas renseigné.
-const FALLBACK_API_BASE_URL = 'http://10.0.0.63:8000/api';
+const FALLBACK_API_BASE_URL = 'https://mediai-backend-s8en.onrender.com/api';
 
 export const API_BASE_URL =
   Constants?.expoConfig?.extra?.apiBaseUrl ?? FALLBACK_API_BASE_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 15000,
+  timeout: 90000,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

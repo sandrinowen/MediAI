@@ -11,10 +11,10 @@
 // En local (expo run:android), on retombe sur le fichier à la racine.
 //
 // API_BASE_URL : défini via une variable d'env EAS (ou .env local). Permet
-// de changer l'adresse du backend sans modifier le code — utile quand l'IP
-// du PC change (WiFi / partage de connexion). Fallback : IP par défaut.
+// de changer l'adresse du backend sans modifier le code. Fallback :
+// backend Render public, pour que les builds APK restent utilisables sans IP locale.
 // ─────────────────────────────────────────────────────────────
-const DEFAULT_API_BASE_URL = 'http://10.0.0.63:8000/api';
+const DEFAULT_API_BASE_URL = 'https://mediai-backend-s8en.onrender.com/api';
 
 export default ({ config }) => ({
   ...config,

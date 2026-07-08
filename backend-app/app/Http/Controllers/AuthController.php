@@ -63,27 +63,35 @@ class AuthController extends Controller
 
         $data['role'] = $data['role'] ?? 'patient';
 
-        $user = DB::transaction(function () use ($data, $specialite) {
-            $user = User::create($data);
+        try {
+            $user = DB::transaction(function () use ($data, $specialite) {
+                $user = User::create($data);
 
-            // Compte médecin → fiche dans l'annuaire RDV (réservable).
-            if ($user->role === 'medecin') {
-                $user->medecin()->create([
-                    'nom'          => trim("{$user->prenom} {$user->nom}"),
-                    'specialite'   => $specialite,
-                    'localisation' => $user->localisation,
-                    'telephone'    => $user->telephone,
-                    'email'        => $user->email,
-                    'actif'        => true,
-                ]);
-            }
+                // Compte médecin → fiche dans l'annuaire RDV (réservable).
+                if ($user->role === 'medecin') {
+                    $user->medecin()->create([
+                        'nom'          => trim("{$user->prenom} {$user->nom}"),
+                        'specialite'   => $specialite,
+                        'localisation' => $user->localisation,
+                        'telephone'    => $user->telephone,
+                        'email'        => $user->email,
+                        'actif'        => true,
+                    ]);
+                }
 
-            return $user;
-        });
+                $this->sendEmailVerificationCode($user);
+
+                return $user;
+            });
+        } catch (\Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'message' => "Compte non créé : impossible d'envoyer le code de validation par e-mail. Vérifiez la configuration SMTP du backend.",
+            ], 503);
+        }
 
         $user->refresh(); // recharge les valeurs par défaut DB (ex: role)
-
-        $this->sendEmailVerificationCode($user);
 
         return response()->json([
             'message' => 'Compte créé. Un code de validation a été envoyé par e-mail.',
